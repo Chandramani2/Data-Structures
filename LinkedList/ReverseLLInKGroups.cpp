@@ -76,7 +76,7 @@ int main(){
 	 ll.printLinkedList(head);
 
 	 int k = 4;
-	 cout<<"First K Reversed Linked List: "<<endl;
+	 cout<<"Reversed Linked List in K Groups: "<<endl;
 	 Node *reverseList = ll.reverseInKGroups(head,k);
 	 ll.printLinkedList(reverseList);
 	return 0;
