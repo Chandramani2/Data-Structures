@@ -40,6 +40,7 @@ class LinkedList{
 				cout<<head->data<<" -> ";
 				head = head->next;
 			}
+			cout<<"NULL";
 			cout<<endl;
 		}
 };
@@ -54,7 +55,7 @@ int main(){
 
 	 ll.printLinkedList(head);
 
-	 cout<<"Reversed Linked List: ";
+	 cout<<"Reversed Linked List: "<<endl;
 	 Node *reverseList = ll.reverseLinkedList(head);
 	 ll.printLinkedList(reverseList);
 	return 0;
