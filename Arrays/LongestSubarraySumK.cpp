@@ -19,19 +19,22 @@ int longestSubarrayWithSumK(vector<int> &arr, int k, int n){
 	int ans = 0;
 	for(int i=0;i<n;i++){
 		int ele = pfSum[i] - k;
-		mp[pfSum[i]]=i;
 		if(mp.find(ele)!=mp.end()){	
 			ans = max(ans, i-mp[ele]);
 			cout<<ans<<": "<<i<<" "<< mp[ele]<<endl;	
 		}
+		else{
+			mp[pfSum[i]]=i;
+		}
+		
 
 	}
 	return ans;
 }
 
 int main(){
-	 vector<int> arr = {-5, 8, -14, 2, 4, 12};
-	 int k = -5; //Here ans = 5 ---> from -5 to 4 = sum is -5
+	 vector<int> arr = {1,-1,0};
+	 int k = 0; //Here ans = 5 ---> from -5 to 4 = sum is -5
 	 int n = arr.size();
 	 int ans = longestSubarrayWithSumK(arr, k, n);
 	 cout<<"Largest Subarray With Sum K: "<<ans;
