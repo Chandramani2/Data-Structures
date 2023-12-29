@@ -16,11 +16,18 @@ int getSubsequenceSumWithoutAdjacentElementDp(vector<int> &arr, int n, int ind, 
 
 //IterativeApproach
 
-// int iterativeSolution(vector<int> &arr, int n, vector<int> &dp){
-// 	dp[0] = arr[0];
-// 	dp[1] = max(dp[0],arr[1]);
-// 	dp[2] = max(dp[0]+arr[2],max(arr[2],arr[1]));
-// }
+int iterativeSolution(vector<int> &arr, int n, vector<int> &dp){
+	dp[0] = arr[0];
+	dp[1] = arr[1];
+
+	int ans = dp[0];
+	for(int i=2;i<n;i++){
+		dp[i] = arr[i] + max(0,ans);
+		ans = max(ans,dp[i-1]);
+	}
+	return *max_element(dp.begin(),dp.end());
+	
+}
 
 void printArray(vector<int> &arr){
 	cout<<endl;
@@ -30,7 +37,7 @@ void printArray(vector<int> &arr){
 	cout<<endl;
 }
 int main(){
-	vector<int> arr = {3,5,2,8,-3,18,4,10,6,12,-5,2,4}; //ans = 57
+	vector<int> arr = {3,5,2,8,-3,18,4,10,6,12,-5,-2,-4}; //ans = 57
 	int n = arr.size();
 	int ans = getSubsequenceSumWithoutAdjacentElement(arr,n,0);
 	cout<<" Max Subsequence Without Adjacent Element is : "<<ans<<endl;
@@ -40,7 +47,8 @@ int main(){
 	cout<<" Max Subsequence Without Adjacent Element is : "<<ans<<endl;
 	fill(dp.begin(),dp.end(),-1);
 
-	// ans = iterativeSolution(arr,n,dp);
-	// cout<<" Max Subsequence Without Adjacent Element is : "<<ans<<endl;
+	ans = iterativeSolution(arr,n,dp);
+	cout<<" Max Subsequence Without Adjacent Element is : "<<ans<<endl;
+	printArray(dp);
 	return 0;
 }
