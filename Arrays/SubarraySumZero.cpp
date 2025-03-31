@@ -39,6 +39,17 @@ string checkSubArraySumZero(int arr[], int pf[], int size){
     return "false";
 }
 
+void printRangeSubArraySumZero(int pf[], int size){
+    unordered_map<int, int> hm;
+    for(int i=0; i<size; i++){
+        if(hm.find(pf[i])!=hm.end()){
+           auto x = hm.find(pf[i]);
+           cout<<x->first<<": "<<x->second+1<<" "<< i << endl;
+        }
+        hm.insert({pf[i],i});
+    }
+}
+
 int main(){
     int arr[] = {2,1,0,1,-2,3,4,-1,2,-6,2,1};
     int size = sizeof(arr)/sizeof(arr[0]);
@@ -47,6 +58,7 @@ int main(){
     int pf[size] = {0};
     makePrefixArray(arr, size, pf);
     printArray(pf,size);
-    cout<<"Is SubArraySumZero Present: "<< checkSubArraySumZero(arr,pf,size);
+    cout<<"Is SubArraySumZero Present: "<< checkSubArraySumZero(arr,pf,size)<<endl;
+    printRangeSubArraySumZero(pf,size);
     return 0;
 }

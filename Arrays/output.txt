@@ -3,3 +3,6 @@
 4 9
 Output Array: 2 3 3 4 2 5 9 8 10 4 6 7 
 Is SubArraySumZero Present: true
+3: 2 2
+2: 1 4
+4: 4 9
