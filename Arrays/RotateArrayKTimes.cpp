@@ -29,9 +29,9 @@ void rotateArray(int arr[], int size, int L, int R){
 }
 
 void rotateArrayOptimized(int arr[], int size, int k){
-    rotateArray(arr,size,size-k,size-1);
-    rotateArray(arr,size,0,size-k-1);
     rotateArray(arr,size,0,size-1);
+    rotateArray(arr,size,0,k-1);
+    rotateArray(arr,size,k,size-1);
 }
 
 ////////////////////////////////////////////////
@@ -49,6 +49,7 @@ int main(){
     int size = sizeof(arr)/sizeof(arr[0]);
     int k;
     cin>>k;
+    k=k%size;
     printArray(arr,size);
     rotateArrayKTimesBruteForce(arr,size,k);
     printArray(arr,size);
