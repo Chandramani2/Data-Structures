@@ -36,10 +36,26 @@ int countPrimesOptimized(int N){
     bool p[N+1];
     fill(p, p+N+1, true);
     p[0] = p[1] = false;
-    for(int i=2; i<=N; i++){
+
+    // for(int i=2; i<=N; i++){
+    //     if(p[i]){
+    //         we need to move on multiples of i
+
+    //         for(int j=2*i;j<=N;j+=i){
+    //             p[j] = false;
+    //         }
+
+    //     }
+    // }
+
+
+    /*small optimization
+     1. first strike will be done on squares of the number
+     2. value of i need not to be iterated over sqrt(N)+1 when j starting value is i*i
+    */
+    for(int i=2; i*i<=N; i++){
         if(p[i]){
-            // we need to move on multiples of i
-            for(int j=2*i;j<=N;j+=i){
+             for(int j=i*i;j<=N;j+=i){
                 p[j] = false;
             }
         }
