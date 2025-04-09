@@ -24,6 +24,7 @@ void printArray(int arr[], int size){
     }
     cout<<endl;
 }
+
 int factorial(int N){
     int ans=1;
     for(int i=1;i<=N;i++){
