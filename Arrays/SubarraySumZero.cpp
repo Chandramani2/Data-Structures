@@ -35,23 +35,27 @@ string checkSubArraySumZero(int arr[], int pf[], int size){
     for(int i=0; i<size; i++){
         hs.insert(pf[i]);
     }
-    if(hs.size()!=size) return "true";
+    if(hs.size()!=size || hs.find(0)!=hs.end()) return "true";
     return "false";
 }
 
 void printRangeSubArraySumZero(int pf[], int size){
     unordered_map<int, int> hm;
     for(int i=0; i<size; i++){
+        if(pf[i]==0){
+            cout<<0<<": "<<0<<" "<< i << endl;
+        }
         if(hm.find(pf[i])!=hm.end()){
            auto x = hm.find(pf[i]);
            cout<<x->first<<": "<<x->second+1<<" "<< i << endl;
         }
         hm.insert({pf[i],i});
     }
+    
 }
 
 int main(){
-    int arr[] = {2,1,0,1,-2,3,4,-1,2,-6,2,1};
+    int arr[] = {1,2,1,-4, 1,2,1,-4,5,6};
     int size = sizeof(arr)/sizeof(arr[0]);
     bruteForceRangeSubArraySumZero(arr, size);
 
