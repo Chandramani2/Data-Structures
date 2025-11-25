@@ -61,7 +61,8 @@ string infixToPostFix(string exp){
 int main()
 {
 	string exp = "(A/(B-C))*D+E";
+	cout<<"Infix: "<<exp;
 	string ans = infixToPostFix(exp);
-	cout<<"Postfix: "<<ans;
+	cout<<"\nPostfix: "<<ans;
 	return 0;
 }
