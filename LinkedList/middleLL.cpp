@@ -1,9 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
 struct Node{
-
 	int data;
 	struct Node *next;
 	Node(int data){
@@ -22,28 +20,23 @@ class LinkedList{
 			return head;
 		}
 
-		Node * reverseFirstKNode(Node *h, int k){
-
-			int cnt = 0;
-			Node *h2=NULL;
-			Node *tmp=h;
-			Node *tmp2 = h; // to connect broken links after reversing
-			while(h!=NULL && cnt<k){
-				h = h->next;
-				tmp->next=h2;
-				h2=tmp;
-				tmp=h;
-				cnt++;
+		Node *middleLL(Node *head, bool check){
+			if(head==NULL) return NULL;
+			Node *slow = head;
+			Node *fast = head;
+			while(fast->next!=NULL && fast->next->next!=NULL){
+				slow = slow->next;
+				fast = fast->next->next;
 			}
-			tmp2->next = h;
-			return h2;
-		}
-		
-		Node * reverseInKGroups(Node *h, int k){
-			if(h==NULL) return h;
-			Node * h2 = reverseFirstKNode(h,k);
-			h->next = reverseInKGroups(h->next,k);
-			return h2;
+			if(fast->next == NULL){
+				//Length is odd
+				return slow;
+			}
+			else{
+				// Length is even
+				if(check) return slow;
+				else return slow->next;
+			}
 		}
 
 		void printLinkedList(Node *head){
@@ -57,20 +50,23 @@ class LinkedList{
 };
 
 int main(){
-	 Node *head = new Node(7);
+	 Node *head = new Node(8);
 	 LinkedList ll;
+	 head = ll.insertNode(head, 7);
 	 head = ll.insertNode(head, 6);
 	 head = ll.insertNode(head, 5);
 	 head = ll.insertNode(head, 4);
 	 head = ll.insertNode(head, 3);
 	 head = ll.insertNode(head, 2);
 	 head = ll.insertNode(head, 1);
-
+	  cout<<"Given Linked List: \n";
 	 ll.printLinkedList(head);
 
-	 int k = 3;
-	 cout<<"\nReversed Linked List in K Groups: "<<endl;
-	 Node *reverseList = ll.reverseInKGroups(head,k);
-	 ll.printLinkedList(reverseList);
+	/* 	check = true -> 1st mid
+		check = false -> 2nd mid
+ 	*/
+	 bool check = false;
+	 cout<<"\nMiddle Node Value: "<<ll.middleLL(head, check)->data;
+
 	return 0;
 }

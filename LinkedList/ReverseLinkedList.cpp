@@ -1,27 +1,36 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-
 struct Node{
-
 	int data;
-	struct Node *next;
+	Node *next;
 	Node(int data){
 		this->data = data;
 		this->next = NULL;
 	}
-	
 };
 
 class LinkedList{
 	public:
-		Node *insertNode(Node *head, int val){
-			Node *temp = new Node(val);
-			temp->next = head;
-			head = temp;
+		Node *insertNodeBeginning(Node *head, int val){
+			Node *newNode = new Node(val);
+			newNode->next = head;
+			return newNode;
+		}
+		
+		Node *insertNodeAtLast(Node *head, int val){
+			Node *newNode = new Node(val);
+			if(head==NULL){
+				head = newNode; return head;
+			}
+			Node *tmpHead = head;
+			while(tmpHead->next!=NULL) 
+				tmpHead = tmpHead->next;
+			tmpHead->next = newNode;
 			return head;
 		}
 
+		// Method 1
 		Node *reverseLinkedList(Node *h1){
 			Node *tmp = h1;
 			Node *h2 = NULL;
@@ -35,10 +44,27 @@ class LinkedList{
 			return h2;
 		}
 
+		//Method 2: Recursion print
+		void printReverseLLRecursive(Node *h){
+			if(h==NULL) return;
+			printReverseLLRecursive(h->next);
+			cout<<h->data<<" -> ";
+		}
+
+		//Method 3: Recursion return Head Node
+		Node *reverseLLRecursive(Node *h){
+			if(h==NULL || h->next == NULL) return h;
+			Node *h2 = reverseLLRecursive(h->next);
+			h->next->next = h;
+			h->next = NULL;
+			return h2;
+		}
+
 		void printLinkedList(Node *head){
-			while(head!=NULL){
-				cout<<head->data<<" -> ";
-				head = head->next;
+			Node *temp = head;
+			while(temp!=NULL){
+				cout<<temp->data<<" -> ";
+				temp = temp->next;
 			}
 			cout<<"NULL";
 			cout<<endl;
@@ -46,17 +72,26 @@ class LinkedList{
 };
 
 int main(){
-	 Node *head = new Node(5);
-	 LinkedList ll;
-	 head = ll.insertNode(head, 4);
-	 head = ll.insertNode(head, 3);
-	 head = ll.insertNode(head, 2);
-	 head = ll.insertNode(head, 1);
+	Node *head = new Node(5);
+	LinkedList ll;
+	head = ll.insertNodeBeginning(head, 4);
+	head = ll.insertNodeBeginning(head, 3);
+	head = ll.insertNodeBeginning(head, 2);
+	head = ll.insertNodeBeginning(head, 1);
 
-	 ll.printLinkedList(head);
+	ll.printLinkedList(head);
 
-	 cout<<"Reversed Linked List: "<<endl;
-	 Node *reverseList = ll.reverseLinkedList(head);
-	 ll.printLinkedList(reverseList);
+	cout<<"\nRecursion Print ReversedLL: "<<endl;
+	ll.printReverseLLRecursive(head);
+	cout<<"NULL";
+
+	cout<<"\nRecursion return Head Node: "<<endl;
+	head = ll.reverseLLRecursive(head);
+	ll.printLinkedList(head);
+
+	cout<<"\nReversed Linked List: "<<endl;
+	Node *reverseList = ll.reverseLinkedList(head);
+	ll.printLinkedList(reverseList);
+
 	return 0;
 }

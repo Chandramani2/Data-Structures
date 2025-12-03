@@ -16,10 +16,9 @@ struct Node{
 class LinkedList{
 	public:
 		Node *insertNode(Node *head, int val){
-			Node *temp = new Node(val);
-			temp->next = head;
-			head = temp;
-			return head;
+			Node *newNode = new Node(val);
+			newNode->next = head;
+			return newNode;
 		}
 
 		Node * reverseFirstKNode(Node *h1, int k){

@@ -10,6 +10,18 @@ class TreeNode{
 		left=right=NULL;
 	}
 };
+
+//Invert BT
+void invertBT(TreeNode *root){
+	if(root==NULL) return;
+	invertBT(root->left);
+	invertBT(root->right);
+	//swap node
+	TreeNode *tmp = root->right;
+	root->right = root->left;
+	root->left = tmp;
+}
+
 void inOrder(TreeNode *root){
 	if(root==NULL) return;
 	inOrder(root->left);
@@ -17,37 +29,6 @@ void inOrder(TreeNode *root){
 	inOrder(root->right);
 }
 
-void verticalOrderTraversal(TreeNode *root){
-	unordered_map<int, vector<TreeNode *>> hm;
-	queue<pair<TreeNode *,int>> q;
-	q.push({root,0});
-
-	int minLevel=0,maxLevel=0;
-	while(!q.empty()){
-		int currLevel = q.front().second;
-		TreeNode *currNode = q.front().first;
-		q.pop();
-		vector<TreeNode*> currList = hm[currLevel];
-		currList.push_back(currNode);
-		hm[currLevel] = currList;
-		minLevel = min(minLevel,currLevel);
-		maxLevel = max(maxLevel,currLevel);
-		if(currNode->left!=NULL){
-			q.push({currNode->left,currLevel-1});
-		}
-		if(currNode->right!=NULL){
-			q.push({currNode->right,currLevel+1});
-		}
-	}
-
-	for(int i = minLevel;i<=maxLevel;i++){
-		vector<TreeNode*> currList = hm[i];
-		for(auto x: currList){
-			cout<<x->data<<" ";
-		}
-	}
-
-}
 /*
 					10
 
@@ -76,8 +57,8 @@ int main(){
 	root->right->left->left->left->left = new TreeNode(40);
 	cout<<"Inorder Traversal: ";
 	inOrder(root);
-	cout<<endl;
-	cout<<"Vertical Order Traversal: ";
-	verticalOrderTraversal(root);
+	invertBT(root);
+	cout<<"\nAfter Invert Inorder: ";
+	inOrder(root);
 	return 0;
 }

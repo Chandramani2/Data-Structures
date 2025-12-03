@@ -72,13 +72,11 @@ vector<vector<int>> levelOrderReverseAlternateTraversal(TreeNode *root){
 			if(node->right!=NULL){
 				q.push(node->right);
 			}
-			
 			n--;
 		}
 		cnt++;
 		if(cnt%2==0) reverse(tmp.begin(),tmp.end());
-		ans.push_back(tmp);	
-		
+		ans.push_back(tmp);		
 	}
 	return ans;
 }
@@ -94,11 +92,11 @@ void print2DArray(vector<vector<int>> & arr){
 /*
 					10
 
-			7				15	
+			8				15	
 
-		4		6		12		20
+		4		9		12		20
 
-	1
+	1       7          30
 */
 int main(){
 	TreeNode *root = new TreeNode(10);
@@ -110,6 +108,7 @@ int main(){
 	root->right = new TreeNode(15);
 	root->right->right = new TreeNode(20);
 	root->right->left = new TreeNode(12);
+		root->right->left->left = new TreeNode(30);
 	cout<<"Inorder Traversal: ";
 	inOrder(root);
 	cout<<endl;
