@@ -6,26 +6,15 @@ int LCS(string &str1, string &str2, int i, int j, vector<vector<int>> &dp, int c
 
 	if(str1[i]==str2[j]){
 		dp[i][j] =  LCS(str1,str2,i-1,j-1, dp, count+1);
-
 	}
 	else{
-		dp[i][j] = max(count, max(LCS(str1,str2,i,j-1,dp,0), LCS(str1,str2,i-1,j,dp,0)));
+		dp[i][j] = max(count, max(LCS(str1,str2,i,j-1,dp,0), 
+								LCS(str1,str2,i-1,j,dp,0)));
 	}
 	count = max(count,dp[i][j]);
 	return count;
 }
 
-// int LCS(string &str1, string &str2, int i, int j, int count){
-// 	if(i==-1 || j==-1) return 0;
-
-// 	if(str1[i]==str2[j]){
-// 		count =  LCS(str1,str2,i-1,j-1, count+1);
-// 	}
-// 	else{
-// 		count = max(count, max(LCS(str1,str2,i,j-1,0), LCS(str1,str2,i-1,j,0)));
-// 	}
-// 	return count;
-// }
 void print2DArray(int n, int m, vector<vector<int>> &dp){
 	for(int i=0;i<n;i++){
 		for(int j=0;j<m;j++){

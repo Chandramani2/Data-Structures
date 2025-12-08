@@ -75,7 +75,7 @@ int main() {
 	trie.insert("iuehi",92834798);
 	trie.insert("iueewtwe",2374892);
 
-	string matches = trie.searchAllPrefix("z");
+	string matches = trie.searchAllPrefix("iu");
 	cout<<"All Prefix String: \n"<< matches;
 
    return 0;

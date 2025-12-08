@@ -1,21 +1,27 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-int getSubsequenceSumWithoutAdjacentElement(vector<int> &arr, int n, int ind){
+int subsequenceSum(vector<int> &arr,int n, int ind){
 
 	if(ind>=n) return 0;
-	return max(arr[ind]+getSubsequenceSumWithoutAdjacentElement(arr,n,ind+2), getSubsequenceSumWithoutAdjacentElement(arr,n,ind+1));
+	return max(
+		arr[ind]+
+		subsequenceSum(arr,n,ind+2), 
+		subsequenceSum(arr,n,ind+1));
 }
 
-int getSubsequenceSumWithoutAdjacentElementDp(vector<int> &arr, int n, int ind, vector<int> &dp){
+int subsequenceSumDp(vector<int> &arr,int n, int ind, 
+					vector<int> &dp){
 
 	if(ind>=n) return 0;
-	if(dp[ind]!=-1) return dp[ind];
-	return dp[ind] = max(arr[ind]+getSubsequenceSumWithoutAdjacentElement(arr,n,ind+2), getSubsequenceSumWithoutAdjacentElement(arr,n,ind+1));
+	if(dp[ind]!=INT_MIN) return dp[ind];
+	return dp[ind] = max(
+		arr[ind]+
+		subsequenceSumDp(arr,n,ind+2,dp), 
+		subsequenceSumDp(arr,n,ind+1,dp));
 }
 
 //IterativeApproach
-
 int iterativeSolution(vector<int> &arr, int n, vector<int> &dp){
 	dp[0] = arr[0];
 	dp[1] = arr[1];
@@ -26,7 +32,6 @@ int iterativeSolution(vector<int> &arr, int n, vector<int> &dp){
 		ans = max(ans,dp[i-1]);
 	}
 	return *max_element(dp.begin(),dp.end());
-	
 }
 
 void printArray(vector<int> &arr){
@@ -36,19 +41,23 @@ void printArray(vector<int> &arr){
 	}
 	cout<<endl;
 }
+
 int main(){
 	vector<int> arr = {3,5,2,8,-3,18,4,10,6,12,-5,-2,-4}; //ans = 57
 	int n = arr.size();
-	int ans = getSubsequenceSumWithoutAdjacentElement(arr,n,0);
-	cout<<" Max Subsequence Without Adjacent Element is : "<<ans<<endl;
+	int ans = subsequenceSum(arr,n,0);
+	cout<<" Max Subsequence SUM Without Adjacent Element is : "
+	<<ans<<endl;
 
-	vector<int>dp(n,-1);
-	ans = getSubsequenceSumWithoutAdjacentElementDp(arr,n,0,dp);
-	cout<<" Max Subsequence Without Adjacent Element is : "<<ans<<endl;
-	fill(dp.begin(),dp.end(),-1);
-
+	vector<int>dp(n,INT_MIN);
+	ans = subsequenceSumDp(arr,n,0,dp);
+	cout<<" Max Subsequence SUM Without Adjacent Element is [DP]: "
+	<<ans<<endl;
+	
+	fill(dp.begin(),dp.end(),INT_MIN);
 	ans = iterativeSolution(arr,n,dp);
-	cout<<" Max Subsequence Without Adjacent Element is : "<<ans<<endl;
+	cout<<" Max Subsequence SUM Without Adjacent Element is (Space Optimized) : "
+	<<ans<<endl;
 	printArray(dp);
 	return 0;
 }

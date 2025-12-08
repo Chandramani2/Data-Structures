@@ -33,6 +33,14 @@ int LISDp(vector<int> &arr, int n,  vector<int> &lis){
 				lis[i] = lis[j]+1;
 			}
 		}
+		//or,
+		// int m = 0;
+		// for(int j=i;j>=0;j--){
+		// 	if(arr[j]<arr[i]){
+		// 		m = max(m,lis[j]);
+		// 	}
+		// }
+		// lis[i] = 1+m;
 	}
 	return *max_element(lis.begin(),lis.end());
 }
@@ -65,7 +73,7 @@ int main(){
 
 	vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
 	cout<<"LIS Memoization : "<<LISMemo(arr,n, 0, -1, dp)<<endl;
-	print2DArray(dp);
+	// print2DArray(dp);
 
 	vector<int> lis(n,-1);
 	cout<<"LIS Dp : "<<LISDp(arr,n, lis)<<endl;

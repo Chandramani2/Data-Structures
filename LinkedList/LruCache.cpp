@@ -2,7 +2,7 @@
 using namespace std;
 
 class LRUCache{
-	 list<int> dq;
+	 list<int> dll;
 	 unordered_map<int, list<int>::iterator> mp;
 	 int capacity;
 	public:
@@ -11,19 +11,19 @@ class LRUCache{
 		}
 		void hit(int x){
 			if(mp.find(x) == mp.end()){
-				if(dq.size() == capacity){
-					int popBack = dq.back();
-					dq.pop_back();
+				if(dll.size() == capacity){
+					int popBack = dll.back();
+					dll.pop_back();
 					mp.erase(popBack);
 				}
 			}
-			else dq.erase(mp[x]);
+			else dll.erase(mp[x]);
 
-			dq.push_front(x);
-			mp[x] = dq.begin();
+			dll.push_front(x);
+			mp[x] = dll.begin();
 		}
 		void display(){
-			for(auto x: dq){
+			for(auto x: dll){
 				cout<<x<< " ";
 			}
 			cout<<endl;

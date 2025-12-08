@@ -15,10 +15,13 @@ int editDistance(string &str1, string &str2, int i , int j, vector<vector<int>> 
 	if(i==0) return j;
 	if(j==0) return i;
 	if(dp[i][j]!=-1) return dp[i][j];
-	if(str1[i]==str2[j]) return dp[i][j] = editDistance(str1,str2, i-1,j-1);
+	if(str1[i]==str2[j]) 
+		return dp[i][j] = editDistance(str1,str2, i-1,j-1);
 	else{
 		// Insert last char of s2 in s1 // Replace last char of s2 in s1 // delete last of s1 
-		return dp[i][j] = 1 + min(editDistance(str1,str2, i,j-1), min(editDistance(str1,str2, i-1,j-1), editDistance(str1,str2, i-1,j)));
+		return dp[i][j] = 1 + min(editDistance(str1,str2, i,j-1), 
+							min(editDistance(str1,str2, i-1,j-1), 
+								editDistance(str1,str2, i-1,j)));
 	}
 }
 
