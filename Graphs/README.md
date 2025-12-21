@@ -208,3 +208,76 @@ public:
 | **Floyd-Warshall**| $O(V^3)$ | $O(V^2)$ | All-Pairs Shortest Path |
 | **Kruskal's/Prim's**| $O(E \log E)$ | $O(V + E)$ | Minimum Spanning Tree |
 | **Topological Sort**| $O(V + E)$ | $O(V)$ | Dependency Order |
+
+# A* Pathfinding Algorithm Implementation in C++
+
+This document explains the provided C++ implementation of the **A* (A-Star) Search Algorithm**. A* is a heuristic-based pathfinding algorithm widely used in robotics and game development to find the shortest path between two points on a grid.
+
+---
+
+## 1. Data Structures
+
+### The `Node` Struct
+A `Node` represents a single coordinate on the grid. It tracks the mathematical components required for the A* formula:
+
+* **Coordinates**: `x` and `y` represent the position in the 2D grid.
+* **Costs**:
+    * $g$: The cost from the start node to the current node.
+    * $h$ (Heuristic): The estimated cost from the current node to the goal.
+    * $f$: The total estimated cost ($f = g + h$).
+* **Parent**: A `shared_ptr` to the previous node. This creates a "breadcrumb" trail used to reconstruct the path once the goal is found.
+* **Comparison Operator**: Overloads `>` to allow the `priority_queue` to act as a **min-heap**, ensuring the node with the lowest $f$ value is processed first.
+
+---
+
+## 2. Heuristics Class
+The `Heuristics` class provides different ways to estimate the distance to the goal:
+
+1.  **Manhattan Distance**: Used for 4-directional movement (Up, Down, Left, Right). It calculates the sum of absolute differences of coordinates.
+    > $dist = |x_1 - x_2| + |y_1 - y_2|$
+2.  **Euclidean Distance**: Used when diagonal or any-angle movement is allowed. It calculates the straight-line distance.
+    > $dist = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}$
+
+
+
+---
+
+## 3. The AStarSearch Class logic
+
+### Core Search Logic (`findPath`)
+The algorithm explores the grid by maintaining two primary collections:
+* **Open List**: A priority queue of nodes to be explored.
+* **Closed List**: A 2D boolean array (`closedList`) to track nodes that have already been evaluated, preventing infinite loops.
+
+#### The Process:
+1.  **Initialize**: Calculate the heuristic for the starting cell and add it to the Open List.
+2.  **Iterate**: 
+    * Extract the node with the lowest $f$ cost from the Open List.
+    * If the node is the **Goal**, stop and print the path.
+    * If not, mark it as "closed."
+3.  **Neighbor Expansion**: Look at the 4 adjacent cells (Up, Down, Left, Right).
+    * **Validation**: Ensure the neighbor is within bounds, is not a wall (`1`), and hasn't been visited.
+    * **Calculation**: If valid, create a new node, update its $g$ cost ($current.g + 1$), calculate its $h$ cost, and push it to the Open List.
+
+### Helper Functions
+* `isValid()`: Checks if a coordinate is within the matrix boundaries.
+* `printPath()`: Follows the `parent` pointers from the goal back to the start, reverses the list, and prints the coordinates.
+
+---
+
+## 4. Main Function Execution
+The `main` function defines a grid where:
+* `0`: Walkable path.
+* `1`: Obstacle (Wall).
+
+The search starts at `(0, 0)` and targets `(4, 4)`. The algorithm efficiently maneuvers around the walls (like the one at `(1, 0)`) to find the optimal route.
+
+---
+
+## 5. Potential Improvements
+* **Memory Management**: Currently, the code creates many `shared_ptr<Node>` objects. For very large maps, a pre-allocated pool of nodes would be faster.
+* **Diagonal Movement**: To allow diagonal movement, you can expand the `dx` and `dy` arrays to 8 directions and use the Euclidean heuristic.
+* **Euclidean Bug Fix**: In the provided code, the Euclidean formula accidentally uses `x1 - x2` twice. It should be:
+    ```cpp
+    return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+    ```
