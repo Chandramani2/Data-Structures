@@ -59,6 +59,13 @@ private static int[] prevSmaller(int[] arr) {
     return res;
 }
 
+/*
+    Given Array: [10, 13, 18, 15, 20, 18, 25, 12, 15, 6, 10, 8]
+    Next Smaller: [6, 12, 15, 12, 18, 12, 12, 6, 6, -1, 8, -1]
+    Next Greater: [13, 18, 20, 20, 25, 25, -1, 15, -1, 10, -1, -1]
+    Previous Smaller: [-1, 10, 13, 13, 15, 15, 18, 10, 12, -1, 6, 6]
+    Previous Greater: [-1, -1, -1, 18, -1, 20, -1, 25, 25, 15, 15, 10]
+*/
 public static void main() {
     int [] arr = {10,13,18,15,20,18,25,12,15,6,10,8};
     System.out.println("Given Array: " + Arrays.toString(arr));
