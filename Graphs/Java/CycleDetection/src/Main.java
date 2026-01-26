@@ -1,14 +1,19 @@
+/* considering 1 based Graph */
 
 private static boolean cycleDetection(Graph g) {
     int V = g.getV();
-    boolean [] visited = new boolean[V+1]; // visited == stack
+    boolean [] visited = new boolean[V+1];
     Arrays.fill(visited,false);
 
-    boolean [] stack = new boolean[V+1]; // visited == stack
+    boolean [] stack = new boolean[V+1];
     Arrays.fill(stack,false);
 
-    for(int i=0; i<=V; i++){
-        if(cycleDetectDirected(g, i, stack, visited)) return true;
+    for(int i=1; i<=V; i++){
+        if(visited[i]) continue;
+        stack[i]=true;
+        boolean ch = cycleDetectDirected(g, i, stack, visited);
+        stack[i]=false;
+        if (ch) return true;
     }
     return false;
 }
@@ -31,6 +36,7 @@ private static boolean cycleDetectDirected(Graph g, int u, boolean[] stack, bool
     }
     return false;
 }
+
 
 public static void main() {
     // 1. Create a Graph with 5 vertices, Undirected
