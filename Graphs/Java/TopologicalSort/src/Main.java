@@ -1,7 +1,3 @@
-import java.sql.SQLOutput;
-
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 private static ArrayList<Integer> topoLogicalSort(Graph g) {
     int V = g.getV();
     ArrayList<Integer> topological = new ArrayList<>();
