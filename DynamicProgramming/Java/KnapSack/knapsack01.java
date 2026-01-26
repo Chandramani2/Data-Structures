@@ -18,9 +18,10 @@
              (Not picking)        (Picking) (j>=w[i])
  */
 public static void main() {
-    int W = 4;
-    int[] value = {1,2,3};
-    int[] weight = {4,5,1};
+    int W = 8;
+    int[] weight = {3,6,5,2,4};
+    int[] value = {12,20,15,6,10};
+
     System.out.println("Recursion: " + knapSack(W, value, weight));
     System.out.println("DP: " + knapSackDP(W, value, weight));
 
@@ -74,6 +75,8 @@ private static int knapSackDP(int W, int[] value, int[] weight) {
             }
         }
     }
+
+    printChosenItems(dp, n, W, weight);
     return dp[n][W];
 
 
@@ -92,6 +95,22 @@ private static int knapSackDP(int W, int[] value, int[] weight) {
 //    return dp[W];
 }
 
+private static void printChosenItems(int[][] dp, int n, int W, int[] weight) {
+    ArrayList<Integer> list = new ArrayList<>();
+    int i=n, j = W;
+    while(i>0 && j>0){
+        if(dp[i][j] == dp[i-1][j]){
+            // not pick
+            i--;
+        }
+        else{
+            // picked
+            list.add(i);
+            j = j-weight[i];
+        }
+    }
+    System.out.println("Chosen Items Index: " + list);
+}
 
 
 
