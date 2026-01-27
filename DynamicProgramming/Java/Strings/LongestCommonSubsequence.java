@@ -15,17 +15,17 @@ public static int lcsRecursive(String s1, String s2, int m, int n) {
     }
 }
 
-public static int lcsMemo(String s1, String s2, int n, int m, int[][] memo) {
+public static int lcsMemo(String s1, String s2, int m, int n, int[][] memo) {
     if (m == 0 || n == 0) return 0;
 
     // If we've already solved this sub-problem, return it
-    if (memo[n][m] != -1) return memo[n][m];
+    if (memo[m][n] != -1) return memo[m][n];
 
-    if (s1.charAt(n - 1) == s2.charAt(m - 1)) {
-        return memo[n][m] = 1 + lcsMemo(s1, s2, n - 1, m - 1, memo);
+    if (s1.charAt(m - 1) == s2.charAt(n - 1)) {
+        return memo[m][n] = 1 + lcsMemo(s1, s2, m - 1, n - 1, memo);
     } else {
-        return memo[n][m] = Math.max(lcsMemo(s1, s2, n, m - 1, memo),
-                lcsMemo(s1, s2, n - 1, m, memo));
+        return memo[m][n] = Math.max(lcsMemo(s1, s2, m, n - 1, memo),
+                lcsMemo(s1, s2, m - 1, n, memo));
     }
 }
 
@@ -53,14 +53,17 @@ public static void main() {
     String s2 = "AEDFHR";
     longestCommonSubsequenceNaive(s1, s2);
 
-    int ans = lcsRecursive(s1,s2, s1.length(), s2.length());
+    int m = s1.length();
+    int n = s2.length();
+
+    int ans = lcsRecursive(s1,s2, m, n);
     System.out.println("lcsRecursive: " + ans);
 
-    int [][] memo = new int[s1.length()+1][s2.length()+1];
+    int [][] memo = new int[m+1][n+1];
     for (int[] row : memo) {
         Arrays.fill(row, -1);
     }
-    ans = lcsMemo(s1,s2, s1.length(), s2.length(), memo);
+    ans = lcsMemo(s1,s2, m, n, memo);
     System.out.println("lcsMemo: " + ans);
 
     ans = lcsTabulation(s1, s2);
@@ -102,7 +105,6 @@ private static void printAllSubsequence(String s, List<String> ans, String curr)
     // Exclude the first character
     printAllSubsequence(s.substring(1), ans, curr);
 }
-
 
 
 
